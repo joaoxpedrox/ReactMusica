@@ -30,7 +30,7 @@ async function getAlbuns(){
 return await resposta.json();
 }
 
-/* async function getArtistas(){
+async function getArtistas(){
 
   //Fazer o acesso a um 'endpoint' com os dados dos artistas
   //let resposta=await fetch("https://localhost:44342/api/ArtistasAPI/");
@@ -42,7 +42,7 @@ return await resposta.json();
   }
   // devolver os dados a serem usados na componente 
   return await resposta.json();
-} */
+}
 
  async function getGeneros(){
 
@@ -61,22 +61,36 @@ return await resposta.json();
  * @param {*} dadosNovoAlbum 
  */
  async function adicionaAlbum(dadosNovoAlbum) {
+   console.log(dadosNovoAlbum); 
   // https://developer.mozilla.org/pt-BR/docs/Web/API/FormData
   // https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
-  let formData = new FormData();
+  let formData = {
+    Titulo:dadosNovoAlbum.TituloAlbum,
+    Duracao:dadosNovoAlbum.Duracao,
+    NrFaixas:dadosNovoAlbum.NrFaixas,
+    Ano:dadosNovoAlbum.Ano,
+    Editora:dadosNovoAlbum.Editora,
+    GenerosFK:dadosNovoAlbum.GenerosFK ,
+    ArtistasFK:dadosNovoAlbum.ArtistasFK
   
-  formData.append("TituloAlbum", dadosNovoAlbum.TituloAlbum);
+  }
+
+
+  
+  
+/*   formData.append("TituloAlbum", dadosNovoAlbum.TituloAlbum);
   formData.append("Duracao", dadosNovoAlbum.Duracao);
   formData.append("NrFaixas", dadosNovoAlbum.NrFaixas);
   formData.append("Ano", dadosNovoAlbum.Ano);
   formData.append("Editora", dadosNovoAlbum.Editora);
   formData.append("UploadCover", dadosNovoAlbum.UploadCover);
   formData.append("ArtistasFK", dadosNovoAlbum.ArtistasFK);
-  formData.append("GeneroFK", dadosNovoAlbum.GenerosFK);
+  formData.append("GeneroFK", dadosNovoAlbum.GenerosFK); */
 
   let resposta = await fetch("api/AlbunsAPI", {
     method: "POST",
-    body: formData
+    body: JSON.stringify(formData)
+  //  body: formData
   });
 
 
@@ -145,7 +159,7 @@ componentDidMount(){
 this.loadAlbuns();
 
 // ler os dados dos artistas, e adicioná-los à state 'artistas'
-//this.loadArtistas();
+this.loadArtistas();
 
 // ler os dados dos generos, e adicioná-los à state 'generos'
 this.loadGeneros();
@@ -187,12 +201,12 @@ try {
 /**
  * Carrega os Artistas da API e adiciona ao array 'artistas'
  */
-//async loadArtistas() {
+async loadArtistas() {
   /**
    * lê os dados da API(fetch)
    * e atualiza os dados na var. state
    */
- /*  try {
+  try {
     //lê os dados
     //Adiciona ao state (setState())
     this.setState({
@@ -202,7 +216,6 @@ try {
 
     this.setState({
       artistas: artistasDaAPI,
-      loadState: "sucesso"
     });
 
   }  catch (erro) {
@@ -213,29 +226,31 @@ try {
     console.error("Erro na leitura dos artistas da API", erro);
   }
  
-} */
+}
 
 /**
  * Carrega os Generos da API e adiciona ao array 'generos'
  */
- async loadGeneros() {
+  async loadGeneros() {
   /**
    * lê os dados da API(fetch)
    * e atualiza os dados na var. state
    */
-   try {
+  try {
     //lê os dados
     //Adiciona ao state (setState())
     this.setState({
       loadState:"A carregar dados"
     });
     let generosDaAPI = await getGeneros();
+    
 
     this.setState({
       generos: generosDaAPI,
       loadState: "sucesso"
     });
-
+    console.log("Generos da API");
+    console.log(this.state.generos);
   }  catch (erro) {
     this.setState({
       loadState: "erro",
@@ -279,7 +294,7 @@ try {
 
   render() {
     //lê os dados nos arrays
-    const{albuns, generos} = this.state;
+    const{albuns, artistas,generos } = this.state;
     switch (this.state.loadState) {
       case "A carregar dados":
         return <p>A carregar dados. Aguarde, por favor...</p>
@@ -291,12 +306,13 @@ try {
         <h1>Albuns</h1>
         {/*este componente - tabela - irá apresentar os dados dos 'albuns' no ecrã, os 'albuns' devem ser lidos dna API */}
         <h4>Carregar novo Album</h4>
-            {/* <Formulario inDadosArtistas={artistas}
-              outDadosArtistas={this.handlerDadosForm}
-            /> */}
-            <Formulario inDadosGeneros={generos}
+            <Formulario inDadosArtistas={artistas}
               outDadosAlbuns={this.handlerDadosForm}
+              inDadosGeneros={generos}
             />
+           {  /* <Formulario inDadosGeneros={generos}
+              outDadosGeneros={this.handlerDadosForm}
+    /> */}
             <div className="row">
               <div className="col-md-8">
                 <hr />

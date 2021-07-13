@@ -10,9 +10,11 @@ import React from 'react'
  * Mostra uma lista com os artistas existentes,
  * para o utilizador escolher um
  */
-/* const EscolheArtista = (props) => {
+const EscolheArtista = (props) => {
     // vamos recuperar os dados do parâmetro de entrada: inListaArtistas
     // o 'map' funciona como um 'foreach' que irá iterar todos os items dos dados lidos
+    console.log(props);
+
     const opcoes = props.inListaArtistas.map((artista) => {
         return (
             <option key={artista.IdArtista}
@@ -22,30 +24,32 @@ import React from 'react'
         );
     }
     )
+
     return (
         <select required className="form-select" onChange={props.outIdArtistaEscolhido}>
             <option value="">Escolha um artista</option>
             {opcoes}
         </select>
     );
-    } */
+    }
  /**
  * Mostra uma lista com os generos existentes na BD,
  * para o utilizador escolher um
  */
- const EscolheGenero = (props) => {
+const EscolheGenero = (props) => {
         // vamos recuperar os dados do parâmetro de entrada: inListaGeneros
         // o 'map' funciona como um 'foreach' que irá iterar todos os items dos dados lidos
         const opcoes = props.inListaGeneros.map((genero) => {
             return (
-                <option key={genero.idGenero}
+                <option key={genero.IdGenero}
                     required
-                    value={genero.idGenero}>{genero.generoAlbum}
+                    value={genero.IdGenero}>{genero.generoAlbum}
                 </option>
             );
         }
         )
 
+console.log(props);
     return (
         <select required className="form-select" onChange={props.outIdGeneroEscolhido}>
             <option value="">Escolha um género</option>
@@ -202,14 +206,12 @@ import React from 'react'
 
         // concretizar a exportação de dados para a <App/>
         this.props.outDadosAlbuns(dadosForm);
-
-        //ISSUE HERE. CORRECT ME! :) 
         }
 
     render() {
         // ler os dados que foram/são fornecidos à Tabela,
         // como parâmetro de entrada/saída
-        //const { inDadosArtistas } = this.props;
+        const { inDadosArtistas } = this.props;
         const { inDadosGeneros } = this.props;
 
         return (
@@ -220,32 +222,32 @@ import React from 'react'
                     Título do album:  <input
                             type="text"
                             required
-                            onChange={this.handlerLocalChange}
+                            onChange={this.handlerTituloChange}
 
                             className="form-control" /><br />     
                     Duração:  <input
                             type="text"
                             required
-                            onChange={this.handlerLocalChange}
+                            onChange={this.handlerDuracaoChange}
                             className="form-control" /><br />               
                     </div>
                     <div className="col-md-4">
                     Numero de faixas:  <input
                             type="text"
                             required
-                            onChange={this.handlerLocalChange}
+                            onChange={this.handlerNrFaixasChange}
                             className="form-control" /><br />     
                     Ano:  <input
                             type="text"
                             required
-                            onChange={this.handlerLocalChange}
+                            onChange={this.handlerAnoChange}
                             className="form-control" /><br />               
                     </div>
                     <div className="col-md-4">
                     Editora:  <input
                             type="text"
                             required
-                            onChange={this.handlerLocalChange}
+                            onChange={this.handlerEditoraChange}
                             className="form-control" /><br />
                       Cover  : <input
                             type="file"
@@ -255,11 +257,11 @@ import React from 'react'
                             className="form-control" /><br />
                     </div>
                     <div className="col-md-4">
-                        Género : <EscolheGenero inListaGeneros={inDadosGeneros}
+                      Genero: <EscolheGenero inListaGeneros={inDadosGeneros}
                             outIdGeneroEscolhido={this.handlerGeneroChange}/><br /> 
-                        {/* Artista: <EscolheArtista inListaArtistas={inDadosArtistas}
-                            outIdArtistaEscolhido={this.handlerArtistaChange} 
-        />*/}
+                        Artista: <EscolheArtista inListaArtistas={inDadosArtistas}
+                            outIdArtistaEscolhido={this.handlerArtistaChange}
+                        />
                         <br />
                     </div>
                 </div>
