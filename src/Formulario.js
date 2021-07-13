@@ -223,38 +223,42 @@ console.log(props);
                             type="text"
                             required
                             onChange={this.handlerTituloChange}
-
                             className="form-control" /><br />     
-                    Duração:  <input
+                     Editora:  <input
                             type="text"
                             required
-                            onChange={this.handlerDuracaoChange}
-                            className="form-control" /><br />               
+                            onChange={this.handlerEditoraChange}
+                            className="form-control" /><br />  
+                     Cover  : <input
+                            type="file"
+                            required
+                            accept=".jpg,.png"
+                            onChange={this.handlerCoverChange}
+                            className="form-control" /><br />                   
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-2">
                     Numero de faixas:  <input
                             type="text"
+                            maxLength="2"
+                            pattern="[0-9][0-9]?"
                             required
                             onChange={this.handlerNrFaixasChange}
                             className="form-control" /><br />     
                     Ano:  <input
                             type="text"
+                            minLength="4"
+                            maxLength="4"
+                            pattern="[1-2][0-9]{3}"
                             required
                             onChange={this.handlerAnoChange}
-                            className="form-control" /><br />               
-                    </div>
-                    <div className="col-md-4">
-                    Editora:  <input
+                            className="form-control" /><br /> 
+                    Duração:  <input
                             type="text"
+                            maxLength="2"
+                            pattern="[0-9]{1,2}"
                             required
-                            onChange={this.handlerEditoraChange}
-                            className="form-control" /><br />
-                      Cover  : <input
-                            type="file"
-                            required
-                            accept=".jpg,.png"
-                            onChange={this.handlerCoverChange}
-                            className="form-control" /><br />
+                            onChange={this.handlerDuracaoChange}
+                            className="form-control" /><br />                       
                     </div>
                     <div className="col-md-4">
                       Genero: <EscolheGenero inListaGeneros={inDadosGeneros}
