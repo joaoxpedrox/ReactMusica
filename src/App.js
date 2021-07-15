@@ -34,7 +34,7 @@ async function getArtistas(){
 
   //Fazer o acesso a um 'endpoint' com os dados dos artistas
   //let resposta=await fetch("https://localhost:44342/api/ArtistasAPI/");
-  let resposta = await fetch("api/ArtistasAPI/");
+  let resposta = await fetch("api/ArtistasAPI");
   
   if(!resposta.ok){
     //Não recebeu o código 200 do HTTP
@@ -103,6 +103,10 @@ async function getArtistas(){
   // devolver os dados a serem usados na componente 
   return await resposta.json();
 }
+
+
+
+
 
 /**
  * Componente 'principal' do meu projeto
@@ -261,7 +265,7 @@ async loadArtistas() {
 } 
  
 /**
-   * processar os dados recolhidos pelo Formulário
+   * processar os dados recolhidos pelo Formulário para a API
    * @param {*} dadosDoFormulario 
    */
  handlerDadosForm = async (dadosDoFormulario) => {
@@ -307,12 +311,10 @@ async loadArtistas() {
         {/*este componente - tabela - irá apresentar os dados dos 'albuns' no ecrã, os 'albuns' devem ser lidos dna API */}
         <h4>Carregar novo Album</h4>
             <Formulario inDadosArtistas={artistas}
-              outDadosAlbuns={this.handlerDadosForm}
-              inDadosGeneros={generos}
-            />
+                        inDadosGeneros={generos}
+                        outDadosAlbuns={this.handlerDadosForm}/>
            {  /* <Formulario inDadosGeneros={generos}
-              outDadosGeneros={this.handlerDadosForm}
-    /> */}
+              outDadosGeneros={this.handlerDadosForm} /> */}
             <div className="row">
               <div className="col-md-8">
                 <hr />

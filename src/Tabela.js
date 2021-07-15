@@ -13,7 +13,7 @@ function CabecalhoTabela() {
             <tr>
                 <th>Título do album</th>
                 <th>Duração</th>
-                <th>Numero de Faixas</th>
+                <th>Número de Faixas</th>
                 <th>Ano</th>
                 <th>Editora</th>
                 <th>Cover</th>
@@ -50,8 +50,6 @@ const CorpoTabela = (props) => {
                 <td>{row.nomeArtista}</td>
                 <td> <button type="reset" value="Reset"><img src={'./trash.png'} alt="" /></button></td>
                 <td> <button type="reset" value="Reset"><img src={'./pencil.png'} alt="" /> </button></td>
-      
-                
             </tr>
         );
     }
