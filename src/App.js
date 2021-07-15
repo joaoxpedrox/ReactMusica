@@ -62,8 +62,6 @@ async function getArtistas(){
  */
  async function adicionaAlbum(dadosNovoAlbum) {
    console.log(dadosNovoAlbum); 
-  // https://developer.mozilla.org/pt-BR/docs/Web/API/FormData
-  // https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
   let formData = {
     Titulo:dadosNovoAlbum.TituloAlbum,
     Duracao:dadosNovoAlbum.Duracao,
@@ -74,23 +72,9 @@ async function getArtistas(){
     ArtistasFK:dadosNovoAlbum.ArtistasFK
   
   }
-
-
-  
-  
-/*   formData.append("TituloAlbum", dadosNovoAlbum.TituloAlbum);
-  formData.append("Duracao", dadosNovoAlbum.Duracao);
-  formData.append("NrFaixas", dadosNovoAlbum.NrFaixas);
-  formData.append("Ano", dadosNovoAlbum.Ano);
-  formData.append("Editora", dadosNovoAlbum.Editora);
-  formData.append("UploadCover", dadosNovoAlbum.UploadCover);
-  formData.append("ArtistasFK", dadosNovoAlbum.ArtistasFK);
-  formData.append("GeneroFK", dadosNovoAlbum.GenerosFK); */
-
   let resposta = await fetch("api/AlbunsAPI", {
     method: "POST",
     body: JSON.stringify(formData)
-  //  body: formData
   });
 
 
@@ -124,21 +108,11 @@ class App extends React.Component{
        * array que contem os dados dos albuns
       */
       /**
-       * irá guardar a lista de albuns vindas da API
+       * irá guardar a lista de albuns, artistas e generos vindas da API
        */
        albuns:[],
-
-      
-      /**
-       * irá guardar a lista dos artistas vindas da API
-       */
        artistas:[],
-      
-       /**
-       * irá guardar a lista de géneros vindas da API
-       */
-      generos:[],
-      
+       generos:[],
       /**
        * estados do projeto, durante a leitura de dados na API
        * @type {"carregando dados" | "erro" | "sucesso"}
@@ -149,23 +123,22 @@ class App extends React.Component{
         */
        errorMessage: null,
 
-    
     }
 }
         
 
 /*
- * Quando o objeto é criado, executa o código aqui escrito 
-e faz com que sejam carregados os dados da API
+ * Carrega os dados para dentro da aplicação
  */
 componentDidMount(){
  // ler os dados dos albuns, e adicioná-los à state 'albuns' 
+//Carrega toda a tabela de albuns 
 this.loadAlbuns();
-
 // ler os dados dos artistas, e adicioná-los à state 'artistas'
+//Carrega o selector dos artistas. 
 this.loadArtistas();
-
 // ler os dados dos generos, e adicioná-los à state 'generos'
+//Carrega o selector dos generos. 
 this.loadGeneros();
 }
 
@@ -276,9 +249,7 @@ async loadArtistas() {
    * 3. efetuar o reload da tabela
    */
 
-  // 1.
-  // já está feito.
-  // o parâmetro de entrada -dadosDoFormulario- já contém os dados formatados
+//Os dados estão prontos, vamos tentar enviar para a API 
   try {
     // 2.
     await adicionaAlbum(dadosDoFormulario);
@@ -311,17 +282,23 @@ async loadArtistas() {
         {/*este componente - tabela - irá apresentar os dados dos 'albuns' no ecrã, os 'albuns' devem ser lidos dna API */}
         <h4>Carregar novo Album</h4>
             <Formulario inDadosArtistas={artistas}
+<<<<<<< Updated upstream
                         inDadosGeneros={generos}
                         outDadosAlbuns={this.handlerDadosForm}/>
            {  /* <Formulario inDadosGeneros={generos}
               outDadosGeneros={this.handlerDadosForm} /> */}
             <div className="row">
+=======
+              outDadosAlbuns={this.handlerDadosForm}
+              inDadosGeneros={generos}
+            />
+               <div className="row">
+>>>>>>> Stashed changes
               <div className="col-md-8">
                 <hr />
-                <h4>Tabela com os Albuns</h4>
-                {/* Tabela tem um 'parâmetro de entrada', chamado 'inDadosAlbuns'.
-                Neste caso, está a receber o array JSON com os dados dos covers dos albuns,
-                lidos da API */}
+                 {/* Início da tabela*/}
+                <h4>Albuns</h4>
+              
         <Tabela inDadosAlbuns={albuns}/>
       </div>
     </div>

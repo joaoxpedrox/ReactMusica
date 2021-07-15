@@ -13,7 +13,7 @@ import React from 'react'
 const EscolheArtista = (props) => {
     // vamos recuperar os dados do parâmetro de entrada: inListaArtistas
     // o 'map' funciona como um 'foreach' que irá iterar todos os items dos dados lidos
-    console.log(props);
+   
 
     const opcoes = props.inListaArtistas.map((artista) => {
         return (
@@ -48,8 +48,6 @@ const EscolheGenero = (props) => {
             );
         }
         )
-
-console.log(props);
     return (
         <select required className="form-select" onChange={props.outIdGeneroEscolhido}>
             <option value="">Escolha um género</option>
@@ -66,18 +64,20 @@ console.log(props);
 
     constructor(props) {
         super(props);
+        console.log(props); 
 
         // variáveis para guardar os dados introduzidos pelo utilizador, no Formulário
         this.state = {
             tituloDoAlbum:"" ,
-            duracaoDoAlbum: "",
-            nrfaixasDoAlbum: "",
+            
             anoDoAlbum: "",
             editoraDoAlbum:"",
             fichCover:null,
             idDoGenero:"",
-            idDoArtista:""
-        }
+            idDoArtista:"",
+            duracaoDoAlbum: "",
+            nrfaixasDoAlbum:""
+            }
         }
 
         /**
@@ -109,7 +109,7 @@ console.log(props);
         handlerNrFaixasChange = (evento) => {
         // guardar os dados recolhidos sobre a duração total do album
         this.setState({
-            nrFaixasDoAlbum: evento.target.value
+            nrfaixasDoAlbum: evento.target.value
         });
         }
         
@@ -119,9 +119,11 @@ console.log(props);
          */
         handlerAnoChange = (evento) => {
         // guardar os dados recolhidos sobre o ano do album
+
         this.setState({
             anoDoAlbum: evento.target.value
         });
+
         }
 
         /**
@@ -130,16 +132,16 @@ console.log(props);
          */
         handlerEditoraChange = (evento) => {
             // validar os valores introduzidos na TextBox
-            if (/\d/.test(evento.target.value)) {
+         /*   if (/\d/.test(evento.target.value)) {
                 evento.target.setCustomValidity("Não são permitidos números aqui.");
                 return;
             } else {
                 evento.target.setCustomValidity("");
             }
-
+*/
             // guardar os dados recolhidos sobre a editora do album
             this.setState({
-                editoraDoalbum: evento.target.value
+                editoraDoAlbum: evento.target.value
             });
         }
     
@@ -206,6 +208,7 @@ console.log(props);
 
         // concretizar a exportação de dados para a <App/>
         this.props.outDadosAlbuns(dadosForm);
+        console.log("estou aqui");
         }
 
     render() {
