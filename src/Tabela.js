@@ -13,7 +13,7 @@ function CabecalhoTabela() {
             <tr>
                 <th>Título do album</th>
                 <th>Duração</th>
-                <th>Número de Faixas</th>
+                <th>Numero de Faixas</th>
                 <th>Ano</th>
                 <th>Editora</th>
                 <th>Cover</th>
@@ -49,13 +49,9 @@ const CorpoTabela = (props) => {
                 <td>{row.generoAlbum}</td>
                 <td>{row.nomeArtista}</td>
                 <td> <button type="reset" value="Reset"><img src={'./trash.png'} alt="" /></button></td>
-<<<<<<< Updated upstream
-                <td> <button type="reset" value="Reset"><img src={'./pencil.png'} alt="" /> </button></td>
-=======
                 <td> <button value="Reset" onClick={evt => console.log("Teste")}><img src={'./pencil.png'} alt="" /> </button></td>
       
                 
->>>>>>> Stashed changes
             </tr>
         );
     }

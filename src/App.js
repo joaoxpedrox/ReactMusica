@@ -282,18 +282,10 @@ async loadArtistas() {
         {/*este componente - tabela - irá apresentar os dados dos 'albuns' no ecrã, os 'albuns' devem ser lidos dna API */}
         <h4>Carregar novo Album</h4>
             <Formulario inDadosArtistas={artistas}
-<<<<<<< Updated upstream
-                        inDadosGeneros={generos}
-                        outDadosAlbuns={this.handlerDadosForm}/>
-           {  /* <Formulario inDadosGeneros={generos}
-              outDadosGeneros={this.handlerDadosForm} /> */}
-            <div className="row">
-=======
               outDadosAlbuns={this.handlerDadosForm}
               inDadosGeneros={generos}
             />
                <div className="row">
->>>>>>> Stashed changes
               <div className="col-md-8">
                 <hr />
                  {/* Início da tabela*/}
