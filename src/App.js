@@ -63,19 +63,20 @@ async function getArtistas(){
  async function adicionaAlbum(dadosNovoAlbum) {
    console.log(dadosNovoAlbum); 
   let formData = {
-    Titulo:dadosNovoAlbum.TituloAlbum,
-    Duracao:dadosNovoAlbum.Duracao,
-    NrFaixas:dadosNovoAlbum.NrFaixas,
-    Ano:dadosNovoAlbum.Ano,
-    Editora:dadosNovoAlbum.Editora,
-    GenerosFK:dadosNovoAlbum.GenerosFK ,
-    ArtistasFK:dadosNovoAlbum.ArtistasFK
-  
+    "Titulo":dadosNovoAlbum.TituloAlbum,
+    "Duracao":dadosNovoAlbum.Duracao,
+   "NrFaixas":dadosNovoAlbum.NrFaixas,
+    "Ano":dadosNovoAlbum.Ano,
+    "Editora":dadosNovoAlbum.Editora,
+    "GenerosFK":dadosNovoAlbum.GenerosFK ,
+    "ArtistasFK":dadosNovoAlbum.ArtistasFK
   }
   //let resposta = await fetch("api/AlbunsAPI", {
-    let resposta = await fetch("http://localhost:44398/api/AlbunsAPI", {
-    method: "POST",
-    body: JSON.stringify(formData)
+    let resposta = await fetch("http://localhost:44398/api/AlbunsAPI/", {   
+      Accept: 'application/json',
+    body: JSON.stringify(formData),
+
+    method: "POST"
   });
 
   if (!resposta.ok) {
