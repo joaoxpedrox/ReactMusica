@@ -71,12 +71,12 @@ async function getArtistas(){
     "GenerosFK":dadosNovoAlbum.GenerosFK ,
     "ArtistasFK":dadosNovoAlbum.ArtistasFK
   }
-  //let resposta = await fetch("api/AlbunsAPI", {
-    let resposta = await fetch("http://localhost:44398/api/AlbunsAPI/", {   
-      Accept: 'application/json',
-    body: JSON.stringify(formData),
-
-    method: "POST"
+  //let resposta = await fetch('api/ArtistasAPI', {
+    let resposta = await fetch("https://localhost:44398/api/AlbunsAPI", {   
+    method: "POST",
+    mode: 'no-cors',
+    body: JSON.stringify(formData)
+   
   });
 
   if (!resposta.ok) {
