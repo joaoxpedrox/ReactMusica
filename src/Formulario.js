@@ -17,9 +17,9 @@ const EscolheArtista = (props) => {
 
     const opcoes = props.inListaArtistas.map((artista) => {
         return (
-            <option key={artista.IdArtista}
+            <option key={artista.idArtista}
                 required
-                value={artista.IdArtista}>{artista.nomeArtista}
+                value={artista.idArtista}>{artista.nomeArtista}
             </option>
         );
     }
@@ -41,9 +41,9 @@ const EscolheGenero = (props) => {
         // o 'map' funciona como um 'foreach' que irá iterar todos os items dos dados lidos
         const opcoes = props.inListaGeneros.map((genero) => {
             return (
-                <option key={genero.IdGenero}
+                <option key={genero.idGenero}
                     required
-                    value={genero.IdGenero}>{genero.generoAlbum}
+                    value={genero.idGenero}>{genero.generoAlbum}
                 </option>
             );
         }
@@ -201,7 +201,7 @@ const EscolheGenero = (props) => {
             NrFaixas: this.state.nrfaixasDoAlbum,
             Ano: this.state.anoDoAlbum,
             Editora: this.state.editoraDoAlbum,
-            UploadCover: this.state.fichCover,
+            //UploadCover: this.state.fichCover,
             GenerosFK: this.state.idDoGenero,
             ArtistasFK: this.state.idDoArtista
         };
@@ -234,7 +234,7 @@ const EscolheGenero = (props) => {
                             className="form-control" /><br />  
                      Cover  : <input
                             type="file"
-                            required
+                            
                             accept=".jpg,.png"
                             onChange={this.handlerCoverChange}
                             className="form-control" /><br />                   

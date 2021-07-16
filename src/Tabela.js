@@ -4,6 +4,7 @@
 
 import React from 'react';
 
+
 /**
  * componente que será utilizada na construção da Tabela
  */
@@ -11,6 +12,8 @@ function CabecalhoTabela() {
     return (
         <thead>
             <tr>
+                
+            <th>ID</th>
                 <th>Título do album</th>
                 <th>Duração</th>
                 <th>Numero de Faixas</th>
@@ -36,7 +39,8 @@ const CorpoTabela = (props) => {
     // o 'map' funciona como um 'foreach' que irá iterar todos os items dos dados lidos
     const rows = props.inDadosAlbunsCorpoTabela.map((row) => {
         return (
-            <tr key={row.IdAlbum}>
+            <tr key={row.idAlbum}>
+                <td>{row.idAlbum}</td>
                 <td>{row.tituloAlbum}</td>
                 <td>{row.duracaoAlbum}</td>
                 <td>{row.nrFaixasAlbum}</td>
@@ -48,15 +52,17 @@ const CorpoTabela = (props) => {
                         height="50" /></td>
                 <td>{row.generoAlbum}</td>
                 <td>{row.nomeArtista}</td>
-                <td> <button type="reset" value="Reset"><img src={'./trash.png'} alt="" /></button></td>
-                <td> <button value="Reset" onClick={evt => console.log("Teste")}><img src={'./pencil.png'} alt="" /> </button></td>
+                <td> <button type="reset" value="Reset"><img src={'./pencil.png'} alt="" /></button></td>
+                <td> <button value="Reset" 
+                onClick={evt => 
+                    fetch('api/AlbunsAPI/'+ row.idAlbum, { method: 'DELETE', })}>
+                    <img src={'./trash.png'} alt="" /> </button></td>
       
                 
             </tr>
         );
     }
     )
-
     return (<tbody>{rows}</tbody>);
 }
 

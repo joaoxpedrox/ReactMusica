@@ -72,11 +72,11 @@ async function getArtistas(){
     ArtistasFK:dadosNovoAlbum.ArtistasFK
   
   }
-  let resposta = await fetch("api/AlbunsAPI", {
+  //let resposta = await fetch("api/AlbunsAPI", {
+    let resposta = await fetch("http://localhost:44398/api/AlbunsAPI", {
     method: "POST",
     body: JSON.stringify(formData)
   });
-
 
   if (!resposta.ok) {
     // não obtivemos o 'código de erro' HTTP 200
