@@ -30,6 +30,26 @@ async function getAlbuns() {
   return await resposta.json();
 }
 
+async function editaAlbum(idDoAlbum) {
+  //Fazer o acesso a um 'endpoint' com os dados dos albuns
+  //let resposta=await fetch("https://localhost:44342/api/AlbunsAPI/");
+
+  let resposta = await fetch("api/AlbunsAPI/"+idDoAlbum);
+  //AQUI recebe os dados de um album específico passado por parametro 
+  console.log(resposta);
+
+  if (!resposta.ok) {
+    //Não recebeu o código 200 do HTTP
+    console.error("Não conseguimos ler os dados da API. Código:" + resposta.status)
+
+  }
+  // devolver os dados a serem usados na componente   
+  return await resposta.json();
+}
+
+
+
+
 //Em construção, vai buscar as props de um album especifico 
 async function getAlbum() {
 
@@ -123,6 +143,8 @@ async function adicionaAlbum(dadosNovoAlbum) {
   // devolver os dados a serem usados na componente 
   return await resposta.json();
 }
+
+
 
             ///////Delete de um ID 
             /**
@@ -242,8 +264,7 @@ class App extends React.Component {
       console.error("Erro na leitura dos Albuns da API", erro)
     }
   }
-
-
+  
   /**
    * Carrega os Artistas da API e adiciona ao array 'artistas' que é responsável pelo selector 
    */
@@ -335,9 +356,9 @@ class App extends React.Component {
       console.error("Erro ao submeter os dados do novo album: ", erro)
     }
   }
-/////
+///// Ação do botão de eliminar o album 
   handlerDeleteAlbum = async (idDoAlbum) => {
-  console.log(idDoAlbum);
+  //console.log(idDoAlbum);
     /**
      * TAREFAS:
      * 1. preparar os dados para serem enviados para a API
@@ -363,25 +384,24 @@ class App extends React.Component {
      // console.error("Erro ao submeter os dados do novo album: ", erro)
     }
   }
-////////////
-  handlerUpdateAlbum = async (dadosDoAlbum) => {
-    console.log(dadosDoAlbum)
+///// Ação do botão para editar albuns 
+//deverá carregar o formulário e depois o botão reagir de forma diferente 
+  handlerUpdateAlbum = async (idDoAlbum) => {
     /**
      * TAREFAS:
-     * 1. preparar os dados para serem enviados para a API
-     * 2. enviar os dados para a API
-     * 3. efetuar o reload da tabela
+     * 1.Enviar o ID para a API 
+     * 2.Recebe os dados do ID da API, têm de os carregar para o formulário 
+     * 3. Efectuar o reload do formulário 
+     * 4.Ao carregar no botão, enviar os dados do formulário 
      */
 
-    // 1.
-    // já está feito.
-    // o parâmetro de entrada -dadosDoFormulario- já contém os dados formatados
+   
     try {
       // 2.
-      await apagaAlbum(dadosDoAlbum);
+      await editaAlbum(idDoAlbum);
 
       // 3.
-      await this.loadAlbuns();
+    //  await this.loadAlbuns();
 
     } catch (erro) {
       this.setState({
