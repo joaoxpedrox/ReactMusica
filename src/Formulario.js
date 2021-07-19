@@ -63,21 +63,32 @@ const EscolheGenero = (props) => {
     class Formulario extends React.Component {
 
     constructor(props) {
-        super(props);
-        console.log(props); 
-
+        
+        super(props);       
         // variáveis para guardar os dados introduzidos pelo utilizador, no Formulário
         this.state = {
             tituloDoAlbum:"" ,
-            
             anoDoAlbum: "",
             editoraDoAlbum:"",
             fichCover:null,
             idDoGenero:"",
             idDoArtista:"",
             duracaoDoAlbum: "",
-            nrfaixasDoAlbum:""
+            nrfaixasDoAlbum:"",
+            Id:""
             }
+         if(props.inDadosAlbum != null){
+             tituloDoAlbum.value=inDadosAlbum.tituloDoAlbum, 
+             anoDoAlbum.value=inDadosAlbum.anoDoAlbum,
+             editoraDoAlbum.value=inDadosAlbum.editoraDoAlbum,
+            // fichCover:null,
+             idDoGenero.value=inDadosAlbum.idDoGenero,
+             idDoArtista.value=inDadosAlbum.idDoArtista,
+             duracaoDoAlbum.value=inDadosAlbum.duracaoDoAlbum,
+             nrfaixasDoAlbum.value=inDadosAlbum.nrfaixasDoAlbum
+            // Id:""
+
+         }   
         }
 
         /**
@@ -203,19 +214,22 @@ const EscolheGenero = (props) => {
             Editora: this.state.editoraDoAlbum,
             //UploadCover: this.state.fichCover,
             GenerosFK: this.state.idDoGenero,
-            ArtistasFK: this.state.idDoArtista
+            ArtistasFK: this.state.idDoArtista,
+            //LEVAR AQUI O ID 
+            Id: this.state.id ,
+            //LEVAR AQUI O SELECTOR QUE DEFINE SE ESTAMOS A ESCREVER/ALTERAR OU FAZER DE NOVO 
+            //acao = nome do botão do submit 
+            acao: this.f
         };
 
         // concretizar a exportação de dados para a <App/>
         this.props.outDadosAlbuns(dadosForm);
-        console.log("estou aqui");
         }
 
     render() {
         // ler os dados que foram/são fornecidos à Tabela,
         // como parâmetro de entrada/saída
-        const { inDadosArtistas } = this.props;
-        const { inDadosGeneros } = this.props;
+        const { inDadosArtistas, inDadosGeneros} = this.props;
 
         return (
             // o 'return' só consegue devolver UM objeto

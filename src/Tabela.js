@@ -86,12 +86,14 @@ class Tabela extends React.Component {
                 <CorpoTabela inDadosAlbunsCorpoTabela={inDadosAlbuns} 
                 //Devolvo 
                 outTabelaDeleteIDAlbum={outDeleteIDAlbum}
+            
                 outEditIDAlbum={outUpdateIDAlbum}
                 />
             </table>
+           
              
             
-        );
+        ); 
     }
 }
 
