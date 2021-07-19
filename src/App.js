@@ -34,7 +34,7 @@ async function editaAlbum(idDoAlbum) {
   //Fazer o acesso a um 'endpoint' com os dados dos albuns
   //let resposta=await fetch("https://localhost:44342/api/AlbunsAPI/");
 
-  let resposta = await fetch("api/AlbunsAPI/"+idDoAlbum);
+  let resposta = await fetch("api/AlbunsAPI/" + idDoAlbum);
   //AQUI recebe os dados de um album específico passado por parametro 
   console.log(resposta);
 
@@ -105,14 +105,13 @@ async function adicionaFoto(dadosNovaFotografia) {
   formData.append("DataFoto", dadosNovaFotografia.DataFoto);
   formData.append("Local", dadosNovaFotografia.Local);
   formData.append("CaoFK", dadosNovaFotografia.CaoFK);
-  let resposta = await fetch("api/FotografiasAPI", {method: "POST",body: formData});
+  let resposta = await fetch("api/FotografiasAPI", { method: "POST", body: formData });
 }
 /**
  * invoca a API e envia os dados do novo Album
  * @param {*} dadosNovoAlbum 
  */
 async function adicionaAlbum(dadosNovoAlbum) {
-  console.log(dadosNovoAlbum);
   // https://developer.mozilla.org/pt-BR/docs/Web/API/FormData
   // https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
 
@@ -146,28 +145,28 @@ async function adicionaAlbum(dadosNovoAlbum) {
 
 
 
-            ///////Delete de um ID 
-            /**
-             * invoca a API e envia os dados do novo Album
-             * @param {*} dadosDoAlbum 
-             */
-            async function apagaAlbum(dadosDoAlbum) {
-              //Defino a estrutura do que vou enviar, vindo do formulário 
-            //dado que o DELE utiliza apenas o ID do albúm, só faz sentido passar exatamente o ID. 
-              let resposta = await fetch("api/AlbunsAPI/" + dadosDoAlbum, {
-                method: "DELETE",
-                //tenho de lhe passar o ID 
-              });
+///////Delete de um ID 
+/**
+ * invoca a API e envia o ID para apagar determinado ID (album)
+ * @param {*} dadosDoAlbum 
+ */
+async function apagaAlbum(dadosDoAlbum) {
+  //Defino a estrutura do que vou enviar, vindo do formulário 
+  //dado que o DELE utiliza apenas o ID do albúm, só faz sentido passar exatamente o ID. 
+  let resposta = await fetch("api/AlbunsAPI/" + dadosDoAlbum, {
+    method: "DELETE",
+    //tenho de lhe passar o ID 
+  });
 
-              if (!resposta.ok) {
-                // não obtivemos o 'código de erro' HTTP 200
-                console.error(resposta);
-                throw new Error('não foi possível enviar os dados do novo album. Código= ' + resposta.status);
-              }
+  if (!resposta.ok) {
+    // não obtivemos o 'código de erro' HTTP 200
+    console.error(resposta);
+    throw new Error('não foi possível enviar os dados do novo album. Código= ' + resposta.status);
+  }
 
-              // devolver os dados a serem usados na componente 
-              return await resposta.json();
-            }
+  // devolver os dados a serem usados na componente 
+  return await resposta.json();
+}
 
 
 
@@ -264,7 +263,7 @@ class App extends React.Component {
       console.error("Erro na leitura dos Albuns da API", erro)
     }
   }
-  
+
   /**
    * Carrega os Artistas da API e adiciona ao array 'artistas' que é responsável pelo selector 
    */
@@ -356,9 +355,9 @@ class App extends React.Component {
       console.error("Erro ao submeter os dados do novo album: ", erro)
     }
   }
-///// Ação do botão de eliminar o album 
+  ///// Ação do botão de eliminar o album 
   handlerDeleteAlbum = async (idDoAlbum) => {
-  //console.log(idDoAlbum);
+    //console.log(idDoAlbum);
     /**
      * TAREFAS:
      * 1. preparar os dados para serem enviados para a API
@@ -380,12 +379,12 @@ class App extends React.Component {
 
     } catch (erro) {
       await this.loadAlbuns();
-     
-     // console.error("Erro ao submeter os dados do novo album: ", erro)
+
+      // console.error("Erro ao submeter os dados do novo album: ", erro)
     }
   }
-///// Ação do botão para editar albuns 
-//deverá carregar o formulário e depois o botão reagir de forma diferente 
+  ///// Ação do botão para editar albuns 
+  //deverá carregar o formulário e depois o botão reagir de forma diferente 
   handlerUpdateAlbum = async (idDoAlbum) => {
     /**
      * TAREFAS:
@@ -395,14 +394,12 @@ class App extends React.Component {
      * 4.Ao carregar no botão, enviar os dados do formulário 
      */
 
-   
+
     try {
       // 2.
       await editaAlbum(idDoAlbum);
-
       // 3.
-    //  await this.loadAlbuns();
-
+      return Formulario.props(); 
     } catch (erro) {
       this.setState({
         errorMessage: erro.toString()
@@ -432,10 +429,10 @@ class App extends React.Component {
             {/*este componente - tabela - irá apresentar os dados dos 'albuns' no ecrã, os 'albuns' devem ser lidos dna API */}
             <h4>Carregar novo Album</h4>
             <Formulario inDadosArtistas={artistas}
-                inDadosGeneros={generos}
-                inDadosAlbum={album}
-                //Saida de dados
-                outDadosAlbuns={this.handlerDadosForm}
+              inDadosGeneros={generos}
+              inDadosAlbum={album}
+              //Saida de dados
+              outDadosAlbuns={this.handlerDadosForm}
             />
             <div className="row">
               <div className="col-md-8">
@@ -444,9 +441,9 @@ class App extends React.Component {
                 {/* Tabela tem um 'parâmetro de entrada', chamado 'inDadosAlbuns'.
                 Neste caso, está a receber o array JSON com os dados dos covers dos albuns,
                 lidos da API */}
-                <Tabela inDadosAlbuns={albuns} 
-                        outDeleteIDAlbum={this.handlerDeleteAlbum}
-                        outUpdateIDAlbum={this.handlerUpdateAlbum}/>
+                <Tabela inDadosAlbuns={albuns}
+                  outDeleteIDAlbum={this.handlerDeleteAlbum}
+                  outUpdateIDAlbum={this.handlerUpdateAlbum} />
               </div>
             </div>
           </div>

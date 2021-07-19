@@ -63,8 +63,8 @@ const EscolheGenero = (props) => {
     class Formulario extends React.Component {
 
     constructor(props) {
-        
-        
+        console.log("Teste22")
+        console.log(props.inDadosAlbum); 
         super(props);       
         // variáveis para guardar os dados introduzidos pelo utilizador, no Formulário
         this.state = {
@@ -76,18 +76,22 @@ const EscolheGenero = (props) => {
             idDoArtista:"",
             duracaoDoAlbum: "",
             nrfaixasDoAlbum:"",
-            Id:""
+            Id:"",
+            acao:"",
             }
          if(props.inDadosAlbum != null){
-             tituloDoAlbum.value=inDadosAlbum.tituloDoAlbum, 
-             anoDoAlbum.value=inDadosAlbum.anoDoAlbum,
-             editoraDoAlbum.value=inDadosAlbum.editoraDoAlbum,
+            this.state = {
+                  tituloDoAlbum:inDadosAlbum.tituloDoAlbum, 
+             anoDoAlbum:inDadosAlbum.anoDoAlbum,
+             editoraDoAlbum:inDadosAlbum.editoraDoAlbum,
             // fichCover:null,
-             idDoGenero.value=inDadosAlbum.idDoGenero,
-             idDoArtista.value=inDadosAlbum.idDoArtista,
-             duracaoDoAlbum.value=inDadosAlbum.duracaoDoAlbum,
-             nrfaixasDoAlbum.value=inDadosAlbum.nrfaixasDoAlbum
+             idDoGenero:inDadosAlbum.idDoGenero,
+             idDoArtista:inDadosAlbum.idDoArtista,
+             duracaoDoAlbum:inDadosAlbum.duracaoDoAlbum,
+             nrfaixasDoAlbum:inDadosAlbum.nrfaixasDoAlbum
             // Id:""
+              }
+        
 
          }   
         }
@@ -155,6 +159,7 @@ const EscolheGenero = (props) => {
             this.setState({
                 editoraDoAlbum: evento.target.value
             });
+           
         }
     
         /**
@@ -194,8 +199,7 @@ const EscolheGenero = (props) => {
         }
 
    
-
-   
+      
         /**
          * handler para processar os dados fornecidos pelo Formulário
          * @param {*} evento - dados recolhido pelo <form></form>
@@ -204,6 +208,7 @@ const EscolheGenero = (props) => {
         // impedir o formulário de autoenviar os dados para o servidor
         // essa tarefa cabe, neste projeto, ao componente <App/>
         evento.preventDefault();
+        
 
         // preparar os dados para serem enviados para a <App/>
         // posso já enviar os dados prontos para serem adicionados à API
@@ -220,8 +225,10 @@ const EscolheGenero = (props) => {
             Id: this.state.id ,
             //LEVAR AQUI O SELECTOR QUE DEFINE SE ESTAMOS A ESCREVER/ALTERAR OU FAZER DE NOVO 
             //acao = nome do botão do submit 
-            acao: this.f
+            //acao: this.state.evento, 
+            
         };
+        console.log({evento}); 
 
         // concretizar a exportação de dados para a <App/>
         this.props.outDadosAlbuns(dadosForm);
@@ -285,6 +292,7 @@ const EscolheGenero = (props) => {
                             outIdGeneroEscolhido={this.handlerGeneroChange}/><br /> 
                         Artista: <EscolheArtista inListaArtistas={inDadosArtistas}
                             outIdArtistaEscolhido={this.handlerArtistaChange}
+                        
                         />
                         <br />
                     </div>
