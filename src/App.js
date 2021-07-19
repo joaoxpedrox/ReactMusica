@@ -34,7 +34,7 @@ async function getArtistas(){
 
   //Fazer o acesso a um 'endpoint' com os dados dos artistas
   //let resposta=await fetch("https://localhost:44342/api/ArtistasAPI/");
-  let resposta = await fetch("api/ArtistasAPI");
+  let resposta = await fetch("api/ArtistasAPI/");
   
   if(!resposta.ok){
     //Não recebeu o código 200 do HTTP
@@ -62,22 +62,38 @@ async function getArtistas(){
  */
  async function adicionaAlbum(dadosNovoAlbum) {
    console.log(dadosNovoAlbum); 
-  let formData = {
-    "Titulo":dadosNovoAlbum.TituloAlbum,
-    "Duracao":dadosNovoAlbum.Duracao,
-   "NrFaixas":dadosNovoAlbum.NrFaixas,
-    "Ano":dadosNovoAlbum.Ano,
-    "Editora":dadosNovoAlbum.Editora,
-    "GenerosFK":dadosNovoAlbum.GenerosFK ,
-    "ArtistasFK":dadosNovoAlbum.ArtistasFK
+  // https://developer.mozilla.org/pt-BR/docs/Web/API/FormData
+  // https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
+  //Defino a estrutura do que vou enviar, vindo do formulário 
+let formData2 = {
+    Titulo:dadosNovoAlbum.TituloAlbum,
+    Duracao:dadosNovoAlbum.Duracao,
+    NrFaixas:dadosNovoAlbum.NrFaixas,
+    Ano:dadosNovoAlbum.Ano,
+    Editora:dadosNovoAlbum.Editora,
+    GenerosFK:dadosNovoAlbum.GenerosFK ,
+    ArtistasFK:dadosNovoAlbum.ArtistasFK,
+    Cover:"Teste"
+    //faixas eram required, 
   }
-  //let resposta = await fetch('api/ArtistasAPI', {
-    let resposta = await fetch("https://localhost:44398/api/AlbunsAPI", {   
+let formData = new FormData(); 
+formData.append("Titulo", dadosNovoAlbum.TituloAlbum);
+formData.append("Duracao", dadosNovoAlbum.Duracao);
+formData.append("NrFaixas", dadosNovoAlbum.NrFaixas);
+formData.append("Ano", dadosNovoAlbum.Ano);
+formData.append("Editora", dadosNovoAlbum.Editora);
+formData.append("GenerosFK", dadosNovoAlbum.GenerosFK);
+formData.append("ArtistasFK", dadosNovoAlbum.ArtistasFK);
+formData.append("Cover", "Teste");
+
+  //let resposta= await fetch("https://localhost:44398/api/AlbunsAPI", {
+    let resposta = await fetch("api/AlbunsAPI", {
+
     method: "POST",
-    mode: 'no-cors',
-    body: JSON.stringify(formData)
-   
+    //Construo o objeto JSON 
+    body:formData
   });
+
 
   if (!resposta.ok) {
     // não obtivemos o 'código de erro' HTTP 200
@@ -88,10 +104,6 @@ async function getArtistas(){
   // devolver os dados a serem usados na componente 
   return await resposta.json();
 }
-
-
-
-
 
 /**
  * Componente 'principal' do meu projeto
@@ -109,11 +121,21 @@ class App extends React.Component{
        * array que contem os dados dos albuns
       */
       /**
-       * irá guardar a lista de albuns, artistas e generos vindas da API
+       * irá guardar a lista de albuns vindas da API
        */
        albuns:[],
+
+      
+      /**
+       * irá guardar a lista dos artistas vindas da API
+       */
        artistas:[],
-       generos:[],
+      
+       /**
+       * irá guardar a lista de géneros vindas da API
+       */
+      generos:[],
+      
       /**
        * estados do projeto, durante a leitura de dados na API
        * @type {"carregando dados" | "erro" | "sucesso"}
@@ -124,22 +146,22 @@ class App extends React.Component{
         */
        errorMessage: null,
 
+    
     }
 }
-        
 
 /*
- * Carrega os dados para dentro da aplicação
+ * Quando o objeto é criado, executa o código aqui escrito 
+e faz com que sejam carregados os dados da API
  */
 componentDidMount(){
  // ler os dados dos albuns, e adicioná-los à state 'albuns' 
-//Carrega toda a tabela de albuns 
 this.loadAlbuns();
+
 // ler os dados dos artistas, e adicioná-los à state 'artistas'
-//Carrega o selector dos artistas. 
 this.loadArtistas();
+
 // ler os dados dos generos, e adicioná-los à state 'generos'
-//Carrega o selector dos generos. 
 this.loadGeneros();
 }
 
@@ -177,7 +199,7 @@ try {
 
 
 /**
- * Carrega os Artistas da API e adiciona ao array 'artistas'
+ * Carrega os Artistas da API e adiciona ao array 'artistas' que é responsável pelo selector 
  */
 async loadArtistas() {
   /**
@@ -207,7 +229,7 @@ async loadArtistas() {
 }
 
 /**
- * Carrega os Generos da API e adiciona ao array 'generos'
+ * Carrega os Generos da API e adiciona ao array 'generos', que é responsável pelo selector. 
  */
   async loadGeneros() {
   /**
@@ -239,7 +261,7 @@ async loadArtistas() {
 } 
  
 /**
-   * processar os dados recolhidos pelo Formulário para a API
+   * processar os dados recolhidos pelo Formulário
    * @param {*} dadosDoFormulario 
    */
  handlerDadosForm = async (dadosDoFormulario) => {
@@ -250,7 +272,9 @@ async loadArtistas() {
    * 3. efetuar o reload da tabela
    */
 
-//Os dados estão prontos, vamos tentar enviar para a API 
+  // 1.
+  // já está feito.
+  // o parâmetro de entrada -dadosDoFormulario- já contém os dados formatados
   try {
     // 2.
     await adicionaAlbum(dadosDoFormulario);
@@ -286,12 +310,13 @@ async loadArtistas() {
               outDadosAlbuns={this.handlerDadosForm}
               inDadosGeneros={generos}
             />
-               <div className="row">
+          <div className="row">
               <div className="col-md-8">
                 <hr />
-                 {/* Início da tabela*/}
-                <h4>Albuns</h4>
-              
+                <h4>Tabela com os Albuns</h4>
+                {/* Tabela tem um 'parâmetro de entrada', chamado 'inDadosAlbuns'.
+                Neste caso, está a receber o array JSON com os dados dos covers dos albuns,
+                lidos da API */}
         <Tabela inDadosAlbuns={albuns}/>
       </div>
     </div>

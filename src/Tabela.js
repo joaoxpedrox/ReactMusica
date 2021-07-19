@@ -52,11 +52,8 @@ const CorpoTabela = (props) => {
                         height="50" /></td>
                 <td>{row.generoAlbum}</td>
                 <td>{row.nomeArtista}</td>
-                <td> <button type="reset" value="Reset"><img src={'./pencil.png'} alt="" /></button></td>
-                <td> <button value="Reset" 
-                onClick={evt => 
-                    fetch('api/AlbunsAPI/'+ row.idAlbum, { method: 'DELETE', })}>
-                    <img src={'./trash.png'} alt="" /> </button></td>
+                <td> <button type="reset"  onClick={() => props.outEditIDAlbum(row.idAlbum)}><img src={'./pencil.png'} alt="" /></button></td>
+                <td> <button value="Reset" onClick={() => props.outTabelaDeleteIDAlbum(row.idAlbum)}><img src={'./trash.png'} alt="" /> </button></td>
       
                 
             </tr>
@@ -71,11 +68,13 @@ const CorpoTabela = (props) => {
  * componente Tabela
  */
 class Tabela extends React.Component {
-
+    
+   
+  
     render() {
         // ler os dados que foram/são fornecidos à Tabela,
         // como parâmetro de entrada/saída
-        const { inDadosAlbuns } = this.props;
+        const { inDadosAlbuns, outDeleteIDAlbum, outUpdateIDAlbum} = this.props;
 
         return (
             <table className="table">
@@ -84,8 +83,14 @@ class Tabela extends React.Component {
                     Apesar do nome do parâmetro ser diferente do atribuído à Tabela,
                     a sua função é igual.
                 */}
-                <CorpoTabela inDadosAlbunsCorpoTabela={inDadosAlbuns} />
+                <CorpoTabela inDadosAlbunsCorpoTabela={inDadosAlbuns} 
+                //Devolvo 
+                outTabelaDeleteIDAlbum={outDeleteIDAlbum}
+                outEditIDAlbum={outUpdateIDAlbum}
+                />
             </table>
+             
+            
         );
     }
 }
