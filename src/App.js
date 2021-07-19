@@ -75,6 +75,18 @@ async function getGeneros() {
   return await resposta.json();
 }
 
+//CONTINUAR AQUI!!!!
+//FOTOGRAFIAS 
+//falta alterar campos! 
+//foi copiado do PDF do Teams
+async function adicionaFoto(dadosNovaFotografia) {
+  let formData = new FormData();
+  formData.append("UploadFotografia", dadosNovaFotografia.UploadFotografia);
+  formData.append("DataFoto", dadosNovaFotografia.DataFoto);
+  formData.append("Local", dadosNovaFotografia.Local);
+  formData.append("CaoFK", dadosNovaFotografia.CaoFK);
+  let resposta = await fetch("api/FotografiasAPI", {method: "POST",body: formData});
+}
 /**
  * invoca a API e envia os dados do novo Album
  * @param {*} dadosNovoAlbum 

@@ -64,6 +64,7 @@ const EscolheGenero = (props) => {
 
     constructor(props) {
         
+        
         super(props);       
         // variáveis para guardar os dados introduzidos pelo utilizador, no Formulário
         this.state = {
@@ -164,7 +165,7 @@ const EscolheGenero = (props) => {
 
             // guardar os dados recolhidos pelo <select></select>
             this.setState({
-                fichCover: evento.target.files[0]
+                fichFoto: evento.target.files[0]
             });
         }
 
@@ -212,7 +213,7 @@ const EscolheGenero = (props) => {
             NrFaixas: this.state.nrfaixasDoAlbum,
             Ano: this.state.anoDoAlbum,
             Editora: this.state.editoraDoAlbum,
-            //UploadCover: this.state.fichCover,
+            UploadCover: this.state.fichCover,
             GenerosFK: this.state.idDoGenero,
             ArtistasFK: this.state.idDoArtista,
             //LEVAR AQUI O ID 
@@ -225,7 +226,7 @@ const EscolheGenero = (props) => {
         // concretizar a exportação de dados para a <App/>
         this.props.outDadosAlbuns(dadosForm);
         }
-
+        
     render() {
         // ler os dados que foram/são fornecidos à Tabela,
         // como parâmetro de entrada/saída
@@ -246,11 +247,13 @@ const EscolheGenero = (props) => {
                             required
                             onChange={this.handlerEditoraChange}
                             className="form-control" /><br />  
-                     Cover  : <input
-                            type="file"
+                     
+                     
+                     Cover  : <input type="file"
                             
                             accept=".jpg,.png"
-                            onChange={this.handlerCoverChange}
+                            onSubmit={this.handlerCoverChange}
+                            encType="multipart/form-data"
                             className="form-control" /><br />                   
                     </div>
                     <div className="col-md-2">
