@@ -74,7 +74,7 @@ class Tabela extends React.Component {
     render() {
         // ler os dados que foram/são fornecidos à Tabela,
         // como parâmetro de entrada/saída
-        const { inDadosAlbuns, outDeleteIDAlbum, outUpdateIDAlbum} = this.props;
+        const { inDadosAlbuns, outDeleteIDAlbum, outUpdateIDAlbum,Teste } = this.props;
 
         return (
             <table className="table">
@@ -86,8 +86,8 @@ class Tabela extends React.Component {
                 <CorpoTabela inDadosAlbunsCorpoTabela={inDadosAlbuns} 
                 //Devolvo 
                 outTabelaDeleteIDAlbum={outDeleteIDAlbum}
-            
                 outEditIDAlbum={outUpdateIDAlbum}
+                kaditoAlbum={Teste}
                 />
             </table>
            

@@ -62,7 +62,7 @@ const EscolheGenero = (props) => {
 /**
  * Formulário para adicionar (fazer upload) um album
  */
-class Formulario extends React.Component {
+class EditForm extends React.Component {
 
     constructor(props) {
         
@@ -71,8 +71,9 @@ class Formulario extends React.Component {
         // vamos recuperar os dados do parâmetro de entrada: inListaGeneros
     // o 'map' funciona como um 'foreach' que irá iterar todos os items dos dados lidos
         // variáveis para guardar os dados introduzidos pelo utilizador, no Formulário
+        console.log("aqui")
         this.state = {
-            tituloDoAlbum: "",
+            tituloDoAlbum: "12312312312312",
             anoDoAlbum: "",
             editoraDoAlbum: "",
             fichCover: null,
@@ -258,8 +259,10 @@ class Formulario extends React.Component {
             // o 'return' só consegue devolver UM objeto
             <form onSubmit={this.handlerSubmitForm} encType="multipart/form-data">
                 <div className="row">
+                    NERDADSADASDAS
                     <div className="col-md-4">
                         Título do album:  <input
+                            value={this.state.tituloDoAlbum}
                             type="text"
                             required
                             onChange={this.handlerTituloChange}
@@ -318,4 +321,4 @@ class Formulario extends React.Component {
         )
     }
 }
-export default Formulario;
+export default EditForm;

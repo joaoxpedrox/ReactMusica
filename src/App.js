@@ -1,7 +1,6 @@
 //******************* */
 //App.js
 //******************* */
-
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -9,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Tabela from './Tabela';
 //importa o formulario para o utilizador inserir os dados
 import Formulario from './Formulario';
+import EditForm from './EditForm';
 
 /**
  * Função que lê os dados 'albuns' da API
@@ -125,23 +125,41 @@ async function adicionaAlbum(dadosNovoAlbum) {
   formData.append("GenerosFK", dadosNovoAlbum.GenerosFK);
   formData.append("ArtistasFK", dadosNovoAlbum.ArtistasFK);
   formData.append("Cover", "Teste");
+  console.log(dadosNovoAlbum.status + "Hello!")
+      if (dadosNovoAlbum.Status==0) {
+        console.log("no 4 ")
+        let resposta = await fetch("api/AlbunsAPI", {
+          method: "POST",
+          body: formData
+        });
 
-  //let resposta= await fetch("https://localhost:44398/api/AlbunsAPI", {
-  let resposta = await fetch("api/AlbunsAPI", {
-    method: "POST",
-    body: formData
-  });
+
+        if (!resposta.ok) {
+          // não obtivemos o 'código de erro' HTTP 200
+          console.error(resposta);
+          throw new Error('não foi possível enviar os dados do novo album. Código= ' + resposta.status);
+        }
+
+        // devolver os dados a serem usados na componente 
+        return await resposta.json();
+      }
+else 
+            console.log("No 0")
+              let resposta = await fetch("api/AlbunsAPI", {
+                method: "POST",
+                body: formData
+              });
 
 
-  if (!resposta.ok) {
-    // não obtivemos o 'código de erro' HTTP 200
-    console.error(resposta);
-    throw new Error('não foi possível enviar os dados do novo album. Código= ' + resposta.status);
-  }
+              if (!resposta.ok) {
+                // não obtivemos o 'código de erro' HTTP 200
+                console.error(resposta);
+                throw new Error('não foi possível enviar os dados do novo album. Código= ' + resposta.status);
+              }
 
-  // devolver os dados a serem usados na componente 
-  return await resposta.json();
-}
+              // devolver os dados a serem usados na componente 
+              return await resposta.json();
+            }
 
 
 
@@ -213,6 +231,7 @@ class App extends React.Component {
        */
       errorMessage: null,
 
+      editForm: null
 
     }
   }
@@ -396,10 +415,18 @@ class App extends React.Component {
 
 
     try {
-      // 2.
-      await editaAlbum(idDoAlbum);
-      // 3.
-      return Formulario.props(); 
+
+
+      this.setState({
+        editForm: await editaAlbum(idDoAlbum)
+      });
+      
+      console.log("kadito: ", this.state.editForm)
+
+      this.forceUpdate();
+      
+
+
     } catch (erro) {
       this.setState({
         errorMessage: erro.toString()
@@ -417,6 +444,26 @@ class App extends React.Component {
   render() {
     //lê os dados nos arrays
     const { albuns, artistas, generos, album } = this.state;
+
+    let form = <Formulario 
+    inDadosArtistas={artistas}
+    inDadosGeneros={generos}
+    inDadosAlbum={album}
+    //Saida de dados
+    outDadosAlbuns={this.handlerDadosForm}
+  />
+
+  if(this.state.formData) {
+    console.log("AQUIAQUI")
+    form = <EditForm
+    inDadosArtistas={artistas}
+    inDadosGeneros={generos}
+    editData={this.state.formData}
+    //Saida de dados
+    outDadosAlbuns={this.handlerDadosForm}
+  />
+  }
+
     switch (this.state.loadState) {
       case "A carregar dados":
         return <p>A carregar dados. Aguarde, por favor...</p>
@@ -428,12 +475,10 @@ class App extends React.Component {
             <h1>Albuns</h1>
             {/*este componente - tabela - irá apresentar os dados dos 'albuns' no ecrã, os 'albuns' devem ser lidos dna API */}
             <h4>Carregar novo Album</h4>
-            <Formulario inDadosArtistas={artistas}
-              inDadosGeneros={generos}
-              inDadosAlbum={album}
-              //Saida de dados
-              outDadosAlbuns={this.handlerDadosForm}
-            />
+            {/* IF this.editForm === null */}
+            {form}
+
+
             <div className="row">
               <div className="col-md-8">
                 <hr />
